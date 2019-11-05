@@ -7,9 +7,7 @@ const MillSchema = {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
-    unique: {
-      msg: msgs.NAME_IN_USE
-    },
+    unique: { msg: msgs.NAME_IN_USE },
     validate: {
       notEmpty: { args: [true], msg: msgs.BLANK_NAME }
     }

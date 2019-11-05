@@ -5,7 +5,10 @@ const bodyParser = require("body-parser");
 const httpStatusCodes = require("./constants/httpStatusCodes");
 const db = require("./models/db");
 
-const millRoute = require("./routes/millRoutes");
+const millRoutes = require("./routes/millRoutes");
+const harvestRoutes = require("./routes/harvestRoutes");
+const farmRoutes = require("./routes/farmRoutes");
+const fieldRoutes = require("./routes/fieldRoutes");
 
 (async () => {
   try {
@@ -23,7 +26,10 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use("/api/mills", millRoute);
+app.use("/api/mills", millRoutes);
+app.use("/api/harvests", harvestRoutes);
+app.use("/api/farms", farmRoutes);
+app.use("/api/fields", fieldRoutes);
 
 app.use("*", (req, res) => {
   res.status(httpStatusCodes.NOT_FOUND);
@@ -31,7 +37,9 @@ app.use("*", (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  console.log(err);
+  if ("SequelizeValidationError" == err.name)
+    err.status = httpStatusCodes.BAD_REQUEST;
+
   res.status(err.status || httpStatusCodes.INTERNAL_ERROR);
   res.json({ message: err.message || "Server Error" });
 });

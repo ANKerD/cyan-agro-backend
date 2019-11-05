@@ -2,11 +2,6 @@ const Sequelize = require("sequelize");
 const db = require("./db");
 
 const FieldSchema = {
-  id: {
-    autoIncrement: true,
-    type: Sequelize.INTEGER,
-    primaryKey: true
-  },
   latitude: {
     type: Sequelize.FLOAT,
     allowNull: false,

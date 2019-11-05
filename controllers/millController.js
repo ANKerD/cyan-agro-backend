@@ -6,7 +6,7 @@ module.exports.create = async (req, res, next) => {
   try {
     const { name } = req.body;
     const mill = await Mill.create({ name });
-    res.status(httpStatusCodes.CREATED).json(mill.toJSON());
+    res.status(httpStatusCodes.CREATED).json(mill);
   } catch (error) {
     next(error);
   }
@@ -14,8 +14,7 @@ module.exports.create = async (req, res, next) => {
 
 module.exports.list = async (req, res, next) => {
   try {
-    let mills = await Mill.findAll();
-    mills = mills.map(mill => mill.toJSON());
+    const mills = await Mill.findAll();
     res.status(httpStatusCodes.OK).json(mills);
   } catch (error) {
     next(error);
@@ -36,7 +35,7 @@ module.exports.get = async (req, res, next) => {
 module.exports.update = async (req, res, next) => {
   try {
     let mill = await Mill.findByPk(req.params.id);
-    mill.name = req.body.name;
+    mill.name = req.body.name || mill.name;
     mill = await mill.save();
     res.status(httpStatusCodes.NO_CONTENT).end();
   } catch (error) {

@@ -1,16 +1,16 @@
 const Sequelize = require("sequelize");
 const Field = require("./Field");
 const db = require("./db");
+const msgs = require("../constants/messages");
 
 const FarmSchema = {
-  id: {
-    autoIncrement: true,
-    type: Sequelize.INTEGER,
-    primaryKey: true
-  },
   name: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: { msg: msgs.NAME_IN_USE },
+    validate: {
+      notEmpty: { args: [true], msg: msgs.BLANK_NAME }
+    }
   }
 };
 
