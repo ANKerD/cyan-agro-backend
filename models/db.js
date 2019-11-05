@@ -14,7 +14,10 @@ const sequelize = new Sequelize(
   DATABASE_USER_PASSWORD,
   {
     host: DATABASE_HOST,
-    dialect: "postgres"
+    dialect: "postgres",
+    define: {
+      timestamps: false
+    }
   }
 );
 
