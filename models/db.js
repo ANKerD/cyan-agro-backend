@@ -21,6 +21,4 @@ const sequelize = new Sequelize(
   }
 );
 
-// console.log('sequela', sequelize);
-
 module.exports = sequelize;

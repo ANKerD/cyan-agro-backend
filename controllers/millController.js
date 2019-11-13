@@ -5,7 +5,8 @@ const httpStatusCodes = require("../constants/httpStatusCodes");
 module.exports.create = async (req, res, next) => {
   try {
     const { name } = req.body;
-    const mill = await Mill.create({ name });
+    const image = await photos.random("mill");
+    const mill = await Mill.create({ name, image });
     res.status(httpStatusCodes.CREATED).json(mill);
   } catch (error) {
     next(error);
