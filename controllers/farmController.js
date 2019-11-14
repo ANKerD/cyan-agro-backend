@@ -1,12 +1,15 @@
 const Farm = require("../models/Farm");
 const Field = require("../models/Field");
+const Harvest = require("../models/Harvest");
+const Mill = require("../models/Mill");
 const httpStatusCodes = require("../constants/httpStatusCodes");
 const notFound = require("../helpers/notFound");
 
 module.exports.create = async (req, res, next) => {
   try {
     const { name, harvestId } = req.body;
-    const farm = await Farm.create({ name, harvestId });
+    const image = await photos.random("mill");
+    const farm = await Farm.create({ name, harvestId, image });
     res.status(httpStatusCodes.CREATED).json(farm);
   } catch (error) {
     next(error);
@@ -16,7 +19,13 @@ module.exports.create = async (req, res, next) => {
 module.exports.get = async (req, res, next) => {
   try {
     const farm = await Farm.findByPk(req.params.id, {
-      include: Field
+      include: [
+        Field,
+        {
+          model: Harvest,
+          include: Mill
+        }
+      ]
     });
     notFound(farm);
 

@@ -11,8 +11,12 @@ const unsplash = new Unsplash({
 
 const photos = {
   random: async query => {
-    const response = await unsplash.photos.getRandomPhoto({ query });
-    return (await toJson(response)).urls.small;
+    try {
+      const response = await unsplash.photos.getRandomPhoto({ query });
+      return (await toJson(response)).urls.small;
+    } catch (err) {
+      return "https://picsum.photos/300/?random=1";
+    }
   }
 };
 

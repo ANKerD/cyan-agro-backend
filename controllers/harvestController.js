@@ -1,5 +1,6 @@
 const Harvest = require("../models/Harvest");
 const Farm = require("../models/Farm");
+const Mill = require("../models/Mill");
 const httpStatusCodes = require("../constants/httpStatusCodes");
 
 module.exports.create = async (req, res, next) => {
@@ -15,7 +16,7 @@ module.exports.create = async (req, res, next) => {
 module.exports.get = async (req, res, next) => {
   try {
     const harvest = await Harvest.findByPk(req.params.id, {
-      include: Farm
+      include: [Farm, Mill]
     });
     res.status(httpStatusCodes.OK).json(harvest);
   } catch (error) {

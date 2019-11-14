@@ -11,6 +11,9 @@ const FarmSchema = {
     validate: {
       notEmpty: { args: [true], msg: msgs.BLANK_NAME }
     }
+  },
+  image: {
+    type: Sequelize.STRING
   }
 };
 
