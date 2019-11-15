@@ -1,0 +1,3 @@
+# login
+psql -U dev -h localhost -d cyan -W
+

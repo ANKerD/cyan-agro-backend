@@ -1,10 +1,13 @@
 const Mill = require("../models/Mill");
 const Harvest = require("../models/Harvest");
 const httpStatusCodes = require("../constants/httpStatusCodes");
+const photos = require("../helpers/photos");
 
 module.exports.create = async (req, res, next) => {
   try {
     const { name } = req.body;
+    console.log("mill name", name, req.body);
+
     const image = await photos.random("mill");
     const mill = await Mill.create({ name, image });
     res.status(httpStatusCodes.CREATED).json(mill);

@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const express = require("express");
-const cors = require('cors')
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const httpStatusCodes = require("./constants/httpStatusCodes");
 const db = require("./models/db");
@@ -39,8 +39,17 @@ app.use("*", (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  if ("SequelizeValidationError" == err.name)
+  const userErrors = [
+    "SequelizeValidationError",
+    "SequelizeUniqueConstraintError"
+  ];
+
+  if (userErrors.includes(err.name)) {
+    console.log(err.message);
+
+    err.message = err.errors[0].message || err.message;
     err.status = httpStatusCodes.BAD_REQUEST;
+  }
 
   res.status(err.status || httpStatusCodes.INTERNAL_ERROR);
   res.json({ message: err.message || "Server Error" });

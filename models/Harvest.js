@@ -2,6 +2,7 @@ const Sequelize = require("sequelize");
 const moment = require("moment");
 const Farm = require("./Farm");
 const db = require("./db");
+const { INVALID_DATE_RANGE } = require("../constants/messages");
 
 const HarvestSchema = {
   id: {
@@ -22,7 +23,7 @@ const HarvestSchema = {
 const validate = {
   checkDates() {
     if (moment(this.endDate).isBefore(this.startDate)) {
-      throw new Error("End time should come efter start.");
+      throw new Error(INVALID_DATE_RANGE);
     }
   }
 };

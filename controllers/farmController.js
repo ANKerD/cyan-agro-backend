@@ -3,6 +3,7 @@ const Field = require("../models/Field");
 const Harvest = require("../models/Harvest");
 const Mill = require("../models/Mill");
 const httpStatusCodes = require("../constants/httpStatusCodes");
+const photos = require("../helpers/photos");
 const notFound = require("../helpers/notFound");
 
 module.exports.create = async (req, res, next) => {
